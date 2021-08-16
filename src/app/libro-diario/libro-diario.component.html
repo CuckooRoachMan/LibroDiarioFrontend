@@ -1,0 +1,268 @@
+
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab label="Crear Registros">
+    <div class="row">
+      <div class="col-1">
+
+      </div>
+
+      <div class="col-9" id="Agregar linea">
+        <h3>Agregar Linea a Pda</h3><br>
+        <label for="">Cuenta: </label>
+        <input type="text"  value="" id="cuenta"
+          maxlength="255" minlength="1"
+          required minlength="1"
+          [(ngModel)]="nuevaLinea.cuenta" name="cuenta"
+          #cuenta="ngModel"
+        >
+        <label for="">Subcuenta: </label>
+        <input type="text"  value="" id="subcuenta"
+          maxlength="255" minlength="1"
+          required minlength="1"
+          [(ngModel)]="nuevaLinea.subcuenta" name="subcuenta"
+          #subcuenta="ngModel"
+        >
+        <label for="">Cargamos: </label>
+        <input type="number"  value="" id="debe"
+          maxlength="255" minlength="1"
+          required minlength="1"
+          [(ngModel)]="nuevaLinea.debe" name="debe"
+          #deba="ngModel"
+        >
+        <label for="">Acreeditamos: </label>
+        <input type="number"  value="" id="haber"
+          maxlength="255" minlength="1"
+          required minlength="1"
+          [(ngModel)]="nuevaLinea.haber" name="haber"
+          #haber="ngModel"
+        >
+        <br>
+        <div *ngIf="hasManyEntries" class="alert alert-danger box-msg alert-dismissible fade show" role="alert" id=fixedalert>
+          <strong class="labelForm">No se puede cargar y acreditar al mismo tiempo. Uno de los campos debe ser cero.</strong>
+        </div>
+
+        <br>
+        <button class="btn btn-dark" type="button" name="button" (click)="agregarLinea()">Agregar Linea a PDA</button>
+
+        <form class="" (submit)=agregarPda() action="index.html" method="post" >
+        <br>
+        <h3>PDA</h3><br>
+        <label for="">Fecha: </label>
+        <input type="date"  value="" id="fecha_creacion"
+          maxlength="255" minlength="1"
+          required minlength="1"
+          [(ngModel)]="nuevoPda.fecha_creacion" name="fecha_creacion"
+          #fecha_creacion="ngModel"
+        >
+        <table class="table table-dark" id="pda_input_table">
+        <thead>
+          <tr>
+            <th scope="col">#{{contadorPda}}</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Subcuenta</th>
+            <th scope="col">Debe</th>
+            <th scope="col">Haber</th>
+          </tr>
+        </thead>
+        <tbody>
+              <tr *ngFor="let linea of nuevoPda.listaLineas">
+                <td></td>
+                <td>{{linea.cuenta}}</td>
+                <td>{{linea.subcuenta}}</td>
+                <td>{{linea.debe}}</td>
+                <td>{{linea.haber}}</td>
+              </tr>
+            <tr>
+              <th scope="row">Nombre de Registro: </th>
+              <td>
+                <input type="text"  value="" id="nombreRegistro"
+                  maxlength="255" minlength="1"
+                  required minlength="1"
+                  [(ngModel)]="nuevoPda.nombreRegistro" name="nombreRegistro"
+                  #nombreRegistro="ngModel"
+                >
+              </td>
+              <td>
+
+              </td>
+              <td>
+                <label for="">{{nuevoPda.totalDebe}}</label>
+              </td>
+              <td>
+                <label for="">{{nuevoPda.totalHaber}}</label>
+              </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+      <div *ngIf="pdaNoCuadra" class="alert alert-danger box-msg alert-dismissible fade show" role="alert" id=fixedalert>
+        <strong class="labelForm">El debe y el haber deben de tener las misma cantidad y ser distintos de cero para que el registro sea aceptado.</strong>
+      </div>
+      <div *ngIf="faltanCamposPda" class="alert alert-danger box-msg alert-dismissible fade show" role="alert" id=fixedalert>
+        <strong class="labelForm">Faltan campos para acceptar el registro.</strong>
+      </div>
+      <button class="btn btn-dark" type="submit" name="button">Agregar PDA</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelarPda()">Cancelar PDA</button>
+      </form>
+      </div>
+      <div class="col-1">
+
+      </div>
+
+    </div>
+
+
+
+
+  </mat-tab>
+  <mat-tab label="Libro Diario">
+    <div class="col-1">
+
+    </div>
+    <div class="col-9">
+      <h3>Libro Diario</h3>
+      <table class="table table-dark" id="pda_input_table">
+      <thead>
+        <tr>
+          <th scope="col">Fecha</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Subcuenta</th>
+          <th scope="col">Debe</th>
+          <th scope="col">Haber</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let pda of listaPda">
+          <tr>
+            <td>{{pda.fecha_creacion}}</td>
+            <td>PDA # {{pda.numeroPda}}</td>
+          </tr>
+          <tr *ngFor="let linea of pda.listaLineas">
+              <td></td>
+              <td>{{linea.cuenta}}</td>
+              <td>{{linea.subcuenta}}</td>
+              <td>{{linea.debe}}</td>
+              <td>{{linea.haber}}</td>
+            </tr>
+          <tr>
+            <th scope="row"></th>
+            <td>
+              <label for=""> {{pda.nombreRegistro}}</label>
+            </td>
+            <td>
+
+            </td>
+            <td>
+              <label for="">{{pda.totalDebe}}</label>
+            </td>
+            <td>
+              <label for="">{{pda.totalHaber}}</label>
+            </td>
+        </tr>
+        <tr>
+
+
+      </tbody>
+    </table>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Tablas T">
+    <div class="row">
+      <div class="col-1">
+
+      </div>
+      <div class="col-9">
+        <h3>Tablas de Mayorizacion</h3>
+
+        <div class="row">
+          <div class="d-flex flex-wrap col-4" *ngFor="let tab of tablasMayorizacion; index as i;">
+              <mat-card id="tablaT">
+                <strong>{{tab.cuenta}}</strong><br>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                  <div class="row tablaMayor">
+                    <div class="col-6">
+                      <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th>Debe</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let line of tab.debe">
+                          <td >{{line}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-6">
+                      <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th>Haber</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let line of tab.haber">
+                          <td >{{line}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                  </div>
+                  <hr class="tablaMayor">
+                  <div class="row tablaMayor">
+                    <div class="col-6">
+                      {{this.balanzaComprobacionResultados[i].debe[0]}}
+                    </div>
+                    <div class="col-6">
+                      {{this.balanzaComprobacionResultados[i].haber[0]}}
+                    </div>
+                  </div>
+              </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class="col-1">
+
+      </div>
+
+    </div>
+
+
+  </mat-tab>
+  <mat-tab label="Balanza de Comprobacion">
+    <div class="col-1">
+
+    </div>
+    <div class="col-9">
+      <h3>Balanza de Comporbacion</h3>
+      <table class="table table-dark" id="pda_input_table">
+      <thead>
+        <tr>
+          <th scope="col">Detalle</th>
+          <th scope="col">Debe</th>
+          <th scope="col">Haber</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr *ngFor="let linea of balanzaComprobacionResultados">
+              <td>{{linea.cuenta}}</td>
+              <td>{{linea.debe[0]}}</td>
+              <td>{{linea.haber[0]}}</td>
+            </tr>
+            <tr>
+              <td><strong>Totales:</strong></td>
+              <td><strong>{{balanzaTotalDebe}}</strong></td>
+              <td><strong>{{balanzaTotalHaber}}</strong></td>
+            </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </mat-tab>
+</mat-tab-group>
