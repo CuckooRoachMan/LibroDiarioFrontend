@@ -9,12 +9,13 @@
       <div class="col-9" id="Agregar linea">
         <h3>Agregar Linea a Pda</h3><br>
         <label for="">Cuenta: </label>
-        <input type="text"  value="" id="cuenta"
-          maxlength="255" minlength="1"
-          required minlength="1"
-          [(ngModel)]="nuevaLinea.cuenta" name="cuenta"
-          #cuenta="ngModel"
+        <select class="" id="cuentas" required id="cuenta"
+         [(ngModel)]="nuevaLinea.cuenta" name="cuenta"
+         #cuenta="ngModel"
+
         >
+          <option *ngFor="let c of cuentas" [value]="c">{{c}}</option>
+        </select>
         <label for="">Subcuenta: </label>
         <input type="text"  value="" id="subcuenta"
           maxlength="255" minlength="1"
